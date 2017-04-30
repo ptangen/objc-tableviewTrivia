@@ -1,54 +1,22 @@
 //
-//  FISLocationsTableViewController.m
+//  FISTriviaTableViewController.m
 //  locationTrivia-tableviews
 //
 //  Created by Paul Tangen on 4/30/17.
 //  Copyright © 2017 Joe Burgess. All rights reserved.
 //
 
-#import "FISLocationsTableViewController.h"
 #import "FISTriviaTableViewController.h"
-#import "FISLocation.h"
+#import "FISTrivium.h"
 
-@interface FISLocationsTableViewController ()
+@interface FISTriviaTableViewController ()
 
 @end
 
-@implementation FISLocationsTableViewController
+@implementation FISTriviaTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.accessibilityLabel = @"Locations Table";
-    //self.accessibilityIdentifier =  = "Locations Table";
-    
-    self.locations = [[NSMutableArray alloc] init];
-    
-    FISTrivium *joeIsAmazing = [[FISTrivium alloc] initWithContent:@"Joe is amazing!"
-                                                             likes:5];
-    FISTrivium *markIsJustAlright = [[FISTrivium alloc] initWithContent:@"Mark is just alright."
-                                                                  likes:1];
-    FISTrivium *mossIsTheBoss = [[FISTrivium alloc] initWithContent:@"The boss is Moss."
-                                                              likes:112358];
-    
-
-    FISLocation *empireState = [[FISLocation alloc] initWithName:@"Empire State Building"
-                                           latitude:40.748729
-                                          longitude:-73.985779  ];
-    [empireState.trivia addObject:joeIsAmazing];
-    [self.locations addObject:empireState];
-    
-    FISLocation *flatiron = [[FISLocation alloc] initWithName:@"Flatiron School"
-                                        latitude:40.705545
-                                       longitude:-74.013975];
-    [flatiron.trivia addObject:markIsJustAlright];
-    [self.locations addObject:flatiron];
-    
-    FISLocation *ladyLiberty = [[FISLocation alloc] initWithName:@"Statue of Liberty"
-                                           latitude:40.689481
-                                          longitude:-74.044441];
-    [ladyLiberty.trivia addObject:mossIsTheBoss];
-    [self.locations addObject:ladyLiberty];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,30 +27,22 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete implementation, return the number of rows
-    return [self.locations count];
+    return [self.trivia count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"prototype" forIndexPath:indexPath];
     
-    FISLocation *location = (FISLocation *)self.locations[indexPath.row];
-    cell.textLabel.text = location.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", [location.trivia count]];
+    FISTrivium *trivium = (FISTrivium *)self.trivia[indexPath.row];
+    cell.textLabel.text = trivium.content;
     
     return cell;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // get the indexValue and then get the cooresponding value from the array and then assign the value to the property in the destination VC
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    ((FISTriviaTableViewController *)segue.destinationViewController).trivia = [self.locations[indexPath.row] trivia];
 }
 
 
